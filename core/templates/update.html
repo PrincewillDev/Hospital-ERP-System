@@ -186,6 +186,14 @@
           <div class="form-col">
             <h3 class="section-title">Employee Photo</h3>
             <label for="employeePhoto">Upload Employee Passport Photo</label>
+            
+            {% if form.instance.passport_img %}
+              <div style="margin-bottom: 15px;">
+                <p>Current Image:</p>
+                <img src="{{ form.instance.passport_img.url }}" alt="Employee Photo" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
+              </div>
+            {% endif %}
+            
             {{ form.passport_img }}
             <small>Please upload a clear passport-sized photo (max 2MB)</small>
           </div>
