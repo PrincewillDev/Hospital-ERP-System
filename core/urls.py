@@ -6,7 +6,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('create_employee/', views.create_employee, name='create_employee'),
-    path('show/', views.show, name='show')
+    path('displaypage/', views.data_page, name='displaypage'),
+    path('delete/<uuid:emp_ID>/', views.delete_data, name='delete'),
+    path('update/<uuid:emp_ID>/', views.update_form, name='update'),
+    # path('update_details/<uuid:emp_ID>', views.update_data, name="update_details")
 ]
 
 # Add media URL patterns

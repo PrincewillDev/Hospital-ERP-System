@@ -150,30 +150,34 @@
   <body>
     <header>
       <h1>Hospital Management System</h1>
-      <h2>Employee Records Management</h2>
+      <h2>Update Employee Records</h2>
     </header>
 
     <div class="container">
       {% if messages %}
-        <div class="messages">
-          {% for message in messages %}
-            <div class="{{ message.tags }}">
-              {{ message }}
-              <span class="close-message" onclick="this.parentElement.style.display='none'">&times;</span>
-            </div>
-          {% endfor %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="{{ message.tags }}">
+          {{ message }}
+          <span
+            class="close-message"
+            onclick="this.parentElement.style.display='none'"
+            >&times;</span
+          >
         </div>
+        {% endfor %}
+      </div>
       {% endif %}
 
       <div class="search-bar">
-        <input type="text" placeholder="Search employee by ID or name..." />
-        <button class="btn btn-primary">Search</button>
+        <!-- <input type="text" placeholder="Search employee by ID or name..." />
+        <button class="btn btn-primary">Search</button> -->
       </div>
 
       <form
         method="POST"
         id="employeeForm"
-        action="/create_employee/"
+        action="{% url 'update' emp_ID %}"
         enctype="multipart/form-data"
       >
         {% csrf_token %}
@@ -189,7 +193,7 @@
         <div class="form-row">
           <div class="form-col">
             <label for="firstName">First Name*</label>
-            <!-- <input type="text" id="firstName" name="firstName" required /> -->
+            
             {{ form.first_name }}
           </div>
           <div class="form-col">
@@ -314,8 +318,8 @@
 
         <div class="buttons">
           <div>
-            <button type="submit" class="btn btn-success">Save Employee</button>
-            <a href="{% url 'displaypage' %}" class="btn btn-primary">View Records</a>
+            <button type="submit" class="btn btn-success">Update Employee</button>
+            <a href="{% url 'displaypage' %}" class="btn btn-primary">Cancel</a>
           </div>
         </div>
       </form>
@@ -323,11 +327,11 @@
 
     <script>
       // Auto-hide messages after 5 seconds
-      document.addEventListener('DOMContentLoaded', function() {
-        const messages = document.querySelectorAll('.messages div');
-        messages.forEach(function(message) {
-          setTimeout(function() {
-            message.style.display = 'none';
+      document.addEventListener("DOMContentLoaded", function () {
+        const messages = document.querySelectorAll(".messages div");
+        messages.forEach(function (message) {
+          setTimeout(function () {
+            message.style.display = "none";
           }, 5000);
         });
       });
