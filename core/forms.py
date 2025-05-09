@@ -2,6 +2,7 @@ from django import forms
 from .models import employee_data
 from django.forms.widgets import DateInput
 from django.core.validators import FileExtensionValidator
+from django.contrib.auth.models import User
 
 class Employee_Form(forms.ModelForm):
     class Meta:
@@ -18,3 +19,11 @@ class Employee_Form(forms.ModelForm):
             'accept': 'image/*',
             'class': 'form-control'
         })
+
+class Registerform(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
