@@ -19,6 +19,7 @@
                 color: white;
                 padding: 1rem;
                 text-align: center;
+                position: relative;
             }
             .container {
                 width: 95%;
@@ -152,12 +153,52 @@
             .table-responsive {
                 overflow-x: auto;
             }
+            .user-controls {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .user-info {
+                color: white;
+                text-align: right;
+            }
+            .user-name {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .user-role {
+                font-size: 12px;
+                opacity: 0.8;
+            }
+            .logout-btn {
+                background-color: #e74c3c;
+                color: white;
+                border: none;
+                padding: 8px 15px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                text-decoration: none;
+            }
+            .logout-btn:hover {
+                background-color: #c0392b;
+            }
         </style>
     </head>
     <body>
         <header>
             <h1>Hospital Management System</h1>
             <h2>Employee Records Management</h2>
+            <div class="user-controls">
+                <div class="user-info">
+                    <div class="user-name">{{ request.user.username }}</div>
+                    <div class="user-role">Staff Member</div>
+                </div>
+                <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+            </div>
         </header>
 
         <div class="container">

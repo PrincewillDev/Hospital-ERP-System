@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import Employee_Form
+from .forms import Employee_Form, Registerform
 from .models import employee_data
 from django.http import HttpResponse
 from django.contrib import messages
 import os
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def create_employee(request):
     if request.method == 'POST':
         form = Employee_Form(request.POST, request.FILES)
@@ -44,10 +47,12 @@ def create_employee(request):
     
     return render(request, 'index.html', {'form': form})
 
+@login_required
 def data_page(request):
     employee_info = employee_data.objects.all()
     return render(request, 'data_page.html',{'employee_info': employee_info})
 
+@login_required
 def update_form(request, emp_ID):
     employee_instance = get_object_or_404(employee_data, emp_ID=emp_ID)
     
@@ -87,6 +92,7 @@ def update_form(request, emp_ID):
     
     return render(request, 'update.html', {'form': form, 'emp_ID': emp_ID})
 
+@login_required
 def delete_data(request, emp_ID):
     try:
         employee_to_delete = get_object_or_404(employee_data, emp_ID=emp_ID)
@@ -96,3 +102,22 @@ def delete_data(request, emp_ID):
         messages.error(request, f'Could not delete employee: {str(e)}')
     
     return redirect("displaypage")
+
+
+def register(request):
+    if request.method == 'POST':
+        form  = Registerform(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User registered successfully!')
+            return redirect('displaypage')
+    else:
+        form = Registerform()
+    return render(request, 'register.html', {'form': form})
+
+@login_required
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('login')
+            
